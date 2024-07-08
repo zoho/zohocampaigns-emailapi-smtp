@@ -36,30 +36,30 @@ To use the sample code provided, you'll need to replace placeholder access token
 
 ### Python HTTP Client
 
-[Link to Python HTTP Client Instructions](HTTP/python/README.md)
+[Link to Python HTTP Client Instructions](HTTP/python)
 
 ### Go HTTP Client
 
-[Link to Go HTTP Client Instructions](HTTP/go/README.md)
+[Link to Go HTTP Client Instructions](HTTP/go)
 
 ### Node.js HTTP Client
 
-[Link to Node.js HTTP Client Instructions](HTTP/nodejs/README.md)
+[Link to Node.js HTTP Client Instructions](HTTP/nodejs)
 
 ## SMTP API Clients
 
 ### Java SMTP Client
 
-[Link to Java SMTP Client Instructions](SMTP/java/README.md)
+[Link to Java SMTP Client Instructions](SMTP/java)
 
 ### Python SMTP Client
 
-[Link to Python SMTP Client Instructions](SMTP/python/README.md)
+[Link to Python SMTP Client Instructions](SMTP/python)
 
 ### Go SMTP Client
 
-[Link to Go SMTP Client Instructions](SMTP/go/README.md)
+[Link to Go SMTP Client Instructions](SMTP/go)
 
 ### Node.js SMTP Client
 
-[Link to Node.js SMTP Client Instructions](SMTP/nodejs/README.md)
+[Link to Node.js SMTP Client Instructions](SMTP/nodejs)
