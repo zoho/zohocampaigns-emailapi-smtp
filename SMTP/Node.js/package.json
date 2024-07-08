@@ -1,0 +1,15 @@
+{
+  "name": "smtpmailer",
+  "version": "1.0.0",
+  "description": "Client to send a mail using SMTP",
+  "main": "smtp.js",
+  "scripts": {
+    "test": "echo test",
+    "send": "node smtp.js"
+  },
+  "author": "tester",
+  "license": "ISC",
+  "dependencies": {
+    "nodemailer": "^6.7.8"
+  }
+}
