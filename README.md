@@ -63,6 +63,3 @@ To use the sample code provided, you'll need to replace placeholder access token
 ### Node.js SMTP Client
 
 [Link to Node.js SMTP Client Instructions](SMTP/Node.js)
-
-
-[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://god.gw.postman.com/run-collection/37198385-512695aa-9b55-4e6c-9300-417cc90bb43b?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D37198385-512695aa-9b55-4e6c-9300-417cc90bb43b%26entityType%3Dcollection%26workspaceId%3Dbc0889ab-484e-4c23-bece-0cba46c56d96)
