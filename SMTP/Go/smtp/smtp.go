@@ -143,6 +143,8 @@ func sendEmail(e *email.Email, smtpServer string, auth CustomAuth) error {
         return fmt.Errorf("Error closing data writer: %v", err)
     }
 
+    // Read response
+
     // Close the SMTP client
     client.Quit()
 
