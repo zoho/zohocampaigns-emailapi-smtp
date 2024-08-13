@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 
 const PORT = 587;
-const HOST = "campaigns.zoho.com";
+const HOST = "smtp.campaigns.zoho.com";
 
 const senderAddress = "aaron@zylker.com";
 const recipients = ["aaron.test@gmail.com", "ea.test@zylker.com"];

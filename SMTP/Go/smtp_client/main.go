@@ -68,7 +68,7 @@ func main() {
     }
 
     // Set up SMTP client
-    host := "campaigns.zoho.com"
+    host := "smtp.campaigns.zoho.com"
     port := "587"
     address := net.JoinHostPort(host, port)
 
