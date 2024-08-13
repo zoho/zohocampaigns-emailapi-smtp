@@ -29,13 +29,13 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = 'com.example.App'
+    mainClass = 'com.example.SMTP'
 }
 
 jar {
     manifest {
         attributes(
-            'Main-Class': 'com.example.App'
+            'Main-Class': 'com.example.SMTP'
         )
     }
     from {
