@@ -46,7 +46,7 @@ try:
     message.attach(part2)
 
     # Send the email
-    mailserver = smtplib.SMTP('campaigns.zoho.com', 587)
+    mailserver = smtplib.SMTP('smtp.campaigns.zoho.com', 587)
     mailserver.set_debuglevel(1)
     # identify ourselves to smtp gmail client
     mailserver.ehlo()

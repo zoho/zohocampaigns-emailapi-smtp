@@ -12,11 +12,13 @@ Welcome to the official repository of Zoho Campaigns Email API! This repository 
   - [Python](#python-http-client)
   - [Go](#go-http-client)
   - [Node.js](#nodejs-http-client)
+  - [PHP](#php-http-client)
 - [SMTP API Clients](#smtp-api-clients)
   - [Java](#java-smtp-client)
   - [Python](#python-smtp-client)
   - [Go](#go-smtp-client)
   - [Node.js](#nodejs-smtp-client)
+  - [PHP](#php-smtp-client)
 
 ## Introduction
 
@@ -46,6 +48,10 @@ To use the sample code provided, you'll need to replace placeholder access token
 
 [Link to Node.js HTTP Client Instructions](HTTP/Node.js)
 
+### PHP HTTP Client
+
+[Link to PHP HTTP Client Instructions](HTTP/PHP)
+
 ## SMTP API Clients
 
 ### Java SMTP Client
@@ -63,3 +69,7 @@ To use the sample code provided, you'll need to replace placeholder access token
 ### Node.js SMTP Client
 
 [Link to Node.js SMTP Client Instructions](SMTP/Node.js)
+
+### PHP SMTP Client
+
+[Link to PHP SMTP Client Instructions](SMTP/PHP)
