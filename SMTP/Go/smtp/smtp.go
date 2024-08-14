@@ -70,7 +70,7 @@ func prepareEmailData() (*email.Email, string, CustomAuth) {
     }
 
     // SMTP server configuration
-    host := "smtp.campaigns.zoho.com"
+    host := "smtp-campaigns.zoho.com"
     port := "587"
     smtpServer := net.JoinHostPort(host, port)
 

@@ -1,8 +1,10 @@
 <?php
 
-function smtpSendMail($to, $subject, $htmlContent, $textContent, $headers, $server, $port, $username, $accessToken) {
+function smtpSendMail() {
+    $emailData = prepareEmailData();
+
     // Create a connection to the SMTP server
-    $connection = fsockopen($server, $port, $errno, $errstr, 30);
+    $connection = fsockopen($emailData["host"], $emailData["port"], $errno, $errstr, 30);
     if (!$connection) {
         throw new Exception("Could not connect to SMTP server: $errstr ($errno)");
     }
@@ -67,21 +69,21 @@ function smtpSendMail($to, $subject, $htmlContent, $textContent, $headers, $serv
     }
 
     // Send AUTH command with access token
-    $response = sendCommand($connection, 'AUTH ACCESS_TOKEN ' . $accessToken);
+    $response = sendCommand($connection, 'AUTH ACCESS_TOKEN ' . $emailData["accessToken"]);
     debugPrint('AUTH Response', $response);
     if (strpos($response, '235') !== 0) {
         throw new Exception("Authentication error: $response");
     }
 
     // Send MAIL FROM command
-    $response = sendCommand($connection, 'MAIL FROM:<' . $username . '>');
+    $response = sendCommand($connection, 'MAIL FROM:<' . $emailData["senderAddress"] . '>');
     debugPrint('MAIL FROM Response', $response);
     if (strpos($response, '250') !== 0) {
         throw new Exception("MAIL FROM error: $response");
     }
 
     // Send RCPT TO command
-    foreach ($to as $recipient) {
+    foreach ($emailData["recipients"] as $recipient) {
         $response = sendCommand($connection, 'RCPT TO:<' . $recipient . '>');
         debugPrint('RCPT TO Response for ' . $recipient, $response);
         if (strpos($response, '250') !== 0 && strpos($response, '251') !== 0) {
@@ -97,17 +99,16 @@ function smtpSendMail($to, $subject, $htmlContent, $textContent, $headers, $serv
     }
 
     // Send email headers and content
-    $emailContent = $headers;
-    $emailContent .= "Subject: $subject\r\n";
-    $emailContent .= "To: " . implode(', ', $to) . "\r\n";
+    $emailContent = "X-ZCEA-SMTP-DATA: " . json_encode($emailData["metaData"]) . "\r\n";
+    $emailContent .= "Subject: " . $emailData["subject"] . "\r\n";
     $emailContent .= "MIME-Version: 1.0\r\n";
     $emailContent .= "Content-Type: multipart/alternative; boundary=\"boundary\"\r\n\r\n";
     $emailContent .= "--boundary\r\n";
     $emailContent .= "Content-Type: text/plain; charset=UTF-8\r\n\r\n";
-    $emailContent .= $textContent . "\r\n\r\n";
+    $emailContent .= $emailData["textContent"] . "\r\n\r\n";
     $emailContent .= "--boundary\r\n";
     $emailContent .= "Content-Type: text/html; charset=UTF-8\r\n\r\n";
-    $emailContent .= $htmlContent . "\r\n\r\n";
+    $emailContent .= $emailData["htmlContent"] . "\r\n\r\n";
     $emailContent .= "--boundary--\r\n";
 
     // End the data section
@@ -133,34 +134,36 @@ function smtpSendMail($to, $subject, $htmlContent, $textContent, $headers, $serv
     echo "Email sent successfully";
 }
 
-// Email details
-$to = ["lucy@example.campaigns.zoho.com"];
-$subject = "My first mail using Zoho Campaigns Email API SMTP";
-$htmlContent = "<html><body>Welcome \$[first_name|Customer]$!<br>Summer Hot Savings, You Don't Want to Miss</body></html>";
-$textContent = "Welcome \$[first_name|Customer]$! Summer Hot Savings, You Don’t Want to Miss";
-$headers = "From: aron@marketing.campaigns.zoho.com\r\n";
-$meta_data = [
-    "campaign_name" => "Summer is here",
-    "recipient_data" => [
-        "lucy@example.campaigns.zoho.com" => [
-            "name" => "Aaron Fletcher",
-            "additional_data" => ["phone" => "+91231241444", "country" => "IN"],
-            "merge_data" => ["first_name" => "Aaron"],
-        ]
-    ],
-];
-$jsonMetaData = json_encode($meta_data);
-$headers .= "X-ZCEA-SMTP-DATA: " . $jsonMetaData . "\r\n";
-
-// SMTP server configuration
-$server = 'smtp.campaigns.zoho.com';
-$port = 587;
-$username = 'aron@marketing.campaigns.zoho.com';
-$accessToken = '1000.*************************';
+// Prepare email data
+function prepareEmailData() {
+    $emailData = array(
+        "recipients" => [
+            "sophia@zylker.com"
+        ],
+        "subject" => "My first mail using Zoho Campaigns Email API SMTP",
+        "htmlContent" => "<html><body>Welcome \$[first_name|Customer]$!<br>Summer Hot Savings, You Don't Want to Miss</body></html>",
+        "textContent" => "Welcome \$[first_name|Customer]$! Summer Hot Savings, You Don’t Want to Miss",
+        "metaData" => array(
+            "campaign_name" => "Summer is here",
+            "recipient_data" => [
+                "sophia@zylker.com" => [
+                    "name" => "Sophia Alexandri",
+                    "additional_data" => ["phone" => "+301234567890", "country" => "Greece"],
+                    "merge_data" => ["first_name" => "Sophia"],
+                ]
+            ],
+        ),
+        "host" => "smtp-campaigns.zoho.com",
+        "port" => 587,
+        "senderAddress" => "aron@zylker.com",
+        "accessToken" => "1000.*************************"
+    );
+    return $emailData;
+}
 
 // Send the email
 try {
-    smtpSendMail($to, $subject, $htmlContent, $textContent, $headers, $server, $port, $username, $accessToken);
+    smtpSendMail();
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
 }

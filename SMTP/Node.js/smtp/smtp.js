@@ -54,7 +54,7 @@ async function sendEmail() {
 function prepareEmailData() {
   const emailData = {};
   emailData.port = 587;
-  emailData.host = "smtp.campaigns.zoho.com";
+  emailData.host = "smtp-campaigns.zoho.com";
 
   emailData.subject = "My first mail using Zoho Campaigns Email API SMTP";
   emailData.senderAddress = "aaron@zylker.com";

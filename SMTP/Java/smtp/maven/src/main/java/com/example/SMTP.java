@@ -3,16 +3,17 @@ package com.example;
 import java.util.Date;
 import java.util.Properties;
 
-import javax.mail.AuthenticationFailedException;
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import com.sun.mail.smtp.SMTPTransport;
 
 import org.json.JSONObject;
+
+import com.sun.mail.smtp.SMTPTransport;
+
 import org.json.JSONArray;
 
 public class SMTP {
@@ -25,9 +26,10 @@ public class SMTP {
 
 			// Set up mail session properties
 			Properties properties = new Properties();
-			properties.put("mail.smtp.auth", "true");
+			properties.put("mail.smtp.auth", "false"); // set to false because we are doing a custom AUTH mechanism
 			properties.put("mail.smtp.starttls.enable", "true");
 			properties.put("mail.smtp.ssl.protocols", "TLSv1.3");
+			properties.put("mail.smtp.ssl.trust", "*");
 			properties.put("mail.smtp.host", emailData.getString("host"));
 			properties.put("mail.smtp.port", String.valueOf(emailData.getInt("port")));
 			Session session = Session.getInstance(properties);
@@ -64,15 +66,11 @@ public class SMTP {
 
 			SMTPTransport transport = (SMTPTransport) session.getTransport("smtp");
 
-			// Connect to the SMTP server
-			transport.connect("", "");
+			// Connect to the SMTP server without username and password, because we are sending a custom AUTH command
+			transport.connect();
 
 			// Send the custom AUTH ACCESS_TOKEN command
-			
-			int response = transport.simpleCommand("AUTH ACCESS_TOKEN " + emailData.getString("accessToken"));
-			if (response != 235) {
-				throw new AuthenticationFailedException("AUTH ACCESS_TOKEN command failed: " + response);
-			}
+			transport.issueCommand("AUTH ACCESS_TOKEN " + emailData.getString("accessToken"), 235);
 
 			// Send the email
 			transport.sendMessage(message, message.getAllRecipients());
@@ -86,9 +84,9 @@ public class SMTP {
 	private static JSONObject prepareEmailData() throws Exception {
 		JSONObject emailData = new JSONObject();
 
-		String host = "smtp.campaigns.zoho.com";
+		String host = "smtp-campaigns.zoho.com";
 		int port = 587;
-		String accessToken = "1000.***************************************";
+		String accessToken = "1000.***************************************"; // Replace with your access token
 
 		String senderAddress = "aaron@zylker.com";
 		String subject = "My first mail using Zoho Campaigns Email API SMTP";

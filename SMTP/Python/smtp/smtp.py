@@ -5,7 +5,7 @@ import json
 
 def prepareEmailData():
     emailData = {}
-    emailData["host"] = "smtp.campaigns.zoho.com"
+    emailData["host"] = "smtp-campaigns.zoho.com"
     emailData["port"] = 587
     emailData["access_token"] = "1000.****************************" # replace with your access token
 
