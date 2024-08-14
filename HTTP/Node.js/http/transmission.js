@@ -1,18 +1,17 @@
 const axios = require('axios');
 
-async function main() {
-    const accessToken = "1000.****************************";
-
+// Function to construct the payload
+function constructPayload() {
     // Recipients
     const recipientData = [{
-        address: "lucy@example.campaigns.zoho.com",
-        name: "Aaron Fletcher",
+        address: "sophia@zylker.com",
+        name: "Sophia Alexandri",
         additional_data: {
-            phone: "+919876543210",
-            country: "IN"
+            phone: "+301234567890",
+            country: "Greece"
         },
         merge_data: {
-            first_name: "Aaron"
+            first_name: "Sophia"
         }
     }];
 
@@ -22,17 +21,26 @@ async function main() {
         html: "<html><body>Welcome $[first_name|Customer]$!<br>Summer Hot Savings, You Don't Want to Miss</body></html>",
         text: "Welcome $[first_name|Customer]$! Summer Hot Savings, You Don’t Want to Miss",
         from: {
-            address: "aron@marketing.campaigns.zoho.com",
+            address: "aron@zylker.com",
             name: "Aron Fletcher"
         }
     };
 
     // Payload
     const payload = {
-        campaign_name: "hello_customer",
+        campaign_name: "Summer is here",
         recipients: recipientData,
         content: content
     };
+
+    return payload;
+}
+
+async function main() {
+    const accessToken = "1000.****************************"; // Replace with your access token
+
+    // Construct the payload
+    const payload = constructPayload();
 
     try {
         const url = "https://campaigns.zoho.com/emailapi/v1/transmission";

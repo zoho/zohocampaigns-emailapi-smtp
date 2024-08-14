@@ -13,7 +13,7 @@ import javax.net.ssl.HttpsURLConnection;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class HTTP {
+public class Transmission {
 	public static void main(String args[]) {
         String accessToken = "1000.****************************"; // Replace with your access token
         try {

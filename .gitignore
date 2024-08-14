@@ -3,3 +3,5 @@ package-lock.json
 .DS_Store
 target
 dependency-reduced-pom.xml
+__pycache__
+venv

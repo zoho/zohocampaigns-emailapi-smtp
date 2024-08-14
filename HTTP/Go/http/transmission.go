@@ -32,20 +32,19 @@ type Payload struct {
 	Content      Content     `json:"content"`
 }
 
-func main() {
-	accessToken := "1000.****************************"
-
+// Function to construct the payload
+func constructPayload() (Payload, error) {
 	// Recipients
 	recipients := []Recipient{
 		{
-			Address: "lucy@example.campaigns.zoho.com",
-			Name:    "Aaron Fletcher",
+			Address: "sophia@zylker.com",
+			Name:    "Sophia Alexandri",
 			AdditionalData: map[string]string{
-				"phone":   "+919876543210",
-				"country": "IN",
+				"phone":   "+301234567890",
+				"country": "Greece",
 			},
 			MergeData: map[string]string{
-				"first_name": "Aaron",
+				"first_name": "Sophia",
 			},
 		},
 	}
@@ -56,14 +55,27 @@ func main() {
 		HTML:    "<html><body>Welcome $[first_name|Customer]$!<br>Summer Hot Savings, You Don't Want to Miss</body></html>",
 		Text:    "Welcome $[first_name|Customer]$! Summer Hot Savings, You Don’t Want to Miss",
 	}
-	content.From.Address = "aron@marketing.campaigns.zoho.com"
+	content.From.Address = "aron@zylker.com"
 	content.From.Name = "Aron Fletcher"
 
 	// Payload
 	payload := Payload{
-		CampaignName: "hello_customer",
+		CampaignName: "Summer is here",
 		Recipients:   recipients,
 		Content:      content,
+	}
+
+	return payload, nil
+}
+
+func main() {
+	accessToken := "1000.****************************" // Replace with your access token
+
+	// Construct the payload
+	payload, err := constructPayload()
+	if err != nil {
+		fmt.Printf("Error constructing payload: %v\n", err)
+		return
 	}
 
 	// Encode payload to JSON
