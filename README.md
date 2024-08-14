@@ -34,42 +34,42 @@ To use the sample code provided, you'll need to replace placeholder access token
 
 ### Java HTTP Client
 
-[Link to Java HTTP Client Instructions](HTTP/Java)
+[Link to Java HTTP Client Instructions](HTTP/Java/http)
 
 ### Python HTTP Client
 
-[Link to Python HTTP Client Instructions](HTTP/Python)
+[Link to Python HTTP Client Instructions](HTTP/Python/http)
 
 ### Go HTTP Client
 
-[Link to Go HTTP Client Instructions](HTTP/Go)
+[Link to Go HTTP Client Instructions](HTTP/Go/http)
 
 ### Node.js HTTP Client
 
-[Link to Node.js HTTP Client Instructions](HTTP/Node.js)
+[Link to Node.js HTTP Client Instructions](HTTP/Node.js/http)
 
 ### PHP HTTP Client
 
-[Link to PHP HTTP Client Instructions](HTTP/PHP)
+[Link to PHP HTTP Client Instructions](HTTP/PHP/http)
 
 ## SMTP API Clients
 
 ### Java SMTP Client
 
-[Link to Java SMTP Client Instructions](SMTP/Java)
+[Link to Java SMTP Client Instructions](SMTP/Java/smtp)
 
 ### Python SMTP Client
 
-[Link to Python SMTP Client Instructions](SMTP/Python)
+[Link to Python SMTP Client Instructions](SMTP/Python/smtp)
 
 ### Go SMTP Client
 
-[Link to Go SMTP Client Instructions](SMTP/Go)
+[Link to Go SMTP Client Instructions](SMTP/Go/smtp)
 
 ### Node.js SMTP Client
 
-[Link to Node.js SMTP Client Instructions](SMTP/Node.js)
+[Link to Node.js SMTP Client Instructions](SMTP/Node.js/smtp)
 
 ### PHP SMTP Client
 
-[Link to PHP SMTP Client Instructions](SMTP/PHP)
+[Link to PHP SMTP Client Instructions](SMTP/PHP/smtp)
