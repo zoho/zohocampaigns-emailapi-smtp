@@ -13,44 +13,9 @@ import javax.net.ssl.HttpsURLConnection;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class App {
+public class HTTP {
 	public static void main(String args[]) {
-        String accessToken = "1000.****************************";
-
-		// Recipients
-        JSONArray recipientData = new JSONArray();
-		JSONObject recipient1 = new JSONObject();
-		JSONObject additionalDataR1 = new JSONObject();
-		JSONObject mergeDataR1 = new JSONObject();
-
-		additionalDataR1.put("phone", "+919876543210");
-		additionalDataR1.put("country", "IN");
-		mergeDataR1.put("first_name", "Aaron");
-
-		recipient1.put("address", "lucy@example.campaigns.zoho.com");
-		recipient1.put("name", "Aaron Fletcher");
-		recipient1.put("additional_data", additionalDataR1);
-		recipient1.put("merge_data", mergeDataR1);
-
-		recipientData.put(recipient1);
-		
-		// Content
-		JSONObject content = new JSONObject();
-		content.put("subject", "My first mail using Zoho Campaigns Email API HTTP");
-		content.put("html", "<html><body>Welcome $[first_name|Customer]$!<br>Summer Hot Savings, You Don't Want to Miss</body></html>");
-		content.put("text", "Welcome $[first_name|Customer]$! Summer Hot Savings, You Don’t Want to Miss");
-		
-		JSONObject fromData = new JSONObject();
-		fromData.put("address", "aron@marketing.campaigns.zoho.com");
-		fromData.put("name", "Aron Fletcher");
-		content.put("from", fromData);
-
-		// Payload
-		JSONObject payload = new JSONObject();
-		payload.put("campaign_name", "hello_customer");
-		payload.put("recipients", recipientData);
-		payload.put("content", content);
-
+        String accessToken = "1000.****************************"; // Replace with your access token
         try {
         	URL url = new URL("https://campaigns.zoho.com/emailapi/v1/transmission");
         	URLConnection urlConnection = (HttpsURLConnection) url.openConnection();
@@ -62,6 +27,7 @@ public class App {
 			urlConnection.setRequestProperty("Content-Type", "application/json");
             urlConnection.setRequestProperty("Accept", "application/json");
             urlConnection.setRequestProperty("Authorization", "Zoho-oauthtoken " + accessToken);
+			JSONObject payload = constructPayload();
 			if (payload != null) {
 				OutputStreamWriter outputStreamWriter = new OutputStreamWriter(((HttpsURLConnection) urlConnection).getOutputStream(), "UTF-8");// No I18N
 				outputStreamWriter.write(payload.toString());
@@ -84,5 +50,42 @@ public class App {
         } catch (Exception e) {
             e.printStackTrace();
         }
+	}
+
+	private static JSONObject constructPayload() throws Exception {
+		JSONObject payload = new JSONObject();
+
+		// Recipients
+        JSONArray recipientData = new JSONArray();
+		JSONObject recipient1 = new JSONObject();
+		JSONObject additionalDataR1 = new JSONObject();
+		JSONObject mergeDataR1 = new JSONObject();
+
+		additionalDataR1.put("phone", "+301234567890");
+		additionalDataR1.put("country", "Greece");
+		mergeDataR1.put("first_name", "Sophia");
+
+		recipient1.put("address", "sophia@zylker.com");
+		recipient1.put("name", "Sophia Alexandri");
+		recipient1.put("additional_data", additionalDataR1);
+		recipient1.put("merge_data", mergeDataR1);
+
+		recipientData.put(recipient1);
+		
+		// Content
+		JSONObject content = new JSONObject();
+		content.put("subject", "My first mail using Zoho Campaigns Email API HTTP");
+		content.put("html", "<html><body>Welcome $[first_name|Customer]$!<br>Summer Hot Savings, You Don't Want to Miss</body></html>");
+		content.put("text", "Welcome $[first_name|Customer]$! Summer Hot Savings, You Don’t Want to Miss");
+		
+		JSONObject fromData = new JSONObject();
+		fromData.put("address", "aron@zylker.com");
+		fromData.put("name", "Aron Fletcher");
+		content.put("from", fromData);
+
+		payload.put("campaign_name", "Summer is here");
+		payload.put("recipients", recipientData);
+		payload.put("content", content);
+		return payload;
 	}
 }
