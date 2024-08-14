@@ -1,20 +1,19 @@
 <?php
 
-function main() {
-    $access_token = "1000.****************";
-
+// Function to construct the payload
+function constructPayload() {
     // Recipients
     $recipient_data = [];
 
     $recipient1 = [
-        "address" => "lucy@example.campaigns.zoho.com",
-        "name" => "Aaron Fletcher",
+        "address" => "sophia@zylker.com",
+        "name" => "Sophia Alexandri",
         "additional_data" => [
-            "phone" => "+919876543210",
-            "country" => "IN"
+            "phone" => "+301234567890",
+            "country" => "Greece"
         ],
         "merge_data" => [
-            "first_name" => "Aaron"
+            "first_name" => "Sophia"
         ]
     ];
 
@@ -26,17 +25,26 @@ function main() {
         "html" => "<html><body>Welcome \$[first_name|Customer]\$!<br>Summer Hot Savings, You Don't Want to Miss</body></html>",
         "text" => "Welcome \$[first_name|Customer]\$! Summer Hot Savings, You Don’t Want to Miss",
         "from" => [
-            "address" => "aron@marketing.campaigns.zoho.com",
+            "address" => "aron@zylker.com",
             "name" => "Aron Fletcher"
         ]
     ];
 
     // Payload
     $payload = [
-        "campaign_name" => "hello_customer",
+        "campaign_name" => "Summer is here",
         "recipients" => $recipient_data,
         "content" => $content
     ];
+
+    return $payload;
+}
+
+function main() {
+    $access_token = "1000.****************"; // Replace with your access token
+
+    // Construct the payload
+    $payload = constructPayload();
 
     $url = "https://campaigns.zoho.com/emailapi/v1/transmission";
     $headers = [
@@ -59,14 +67,7 @@ function main() {
         echo "Error: " . curl_error($ch);
     } else {
         echo "Status: " . $http_status . "\n";
-
-        if ($http_status >= 200 && $http_status < 300) {
-            $json_response = json_decode($response, true);
-            echo "Response: " . json_encode($json_response, JSON_PRETTY_PRINT);
-        } else {
-            echo "Error: " . $http_status . "\n";
-            echo $response;
-        }
+        echo "Response: " . $response;
     }
 
     curl_close($ch);
