@@ -28,7 +28,7 @@ This repository contains sample code for interacting with our service. Whether y
 
 ### Prerequisites
 
-To use the sample code provided, you'll need to replace placeholder access token with your own. You can follow the steps provided [here](https://zoho.com) to generate an access token.
+To use the sample code provided, you'll need to replace placeholder access token with your own. You can follow the steps provided [here](https://www.zoho.com/campaigns/help/emailapi/authentication.html) to generate an access token.
 
 ## HTTP API Clients
 
