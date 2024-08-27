@@ -18,8 +18,6 @@ func main() {
     // Send the email
     if err := sendEmail(e, smtpServer, auth); err != nil {
         fmt.Println("Failed to send email:", err)
-    } else {
-        fmt.Println("Email sent successfully!")
     }
 }
 
@@ -144,6 +142,18 @@ func sendEmail(e *email.Email, smtpServer string, auth CustomAuth) error {
     }
 
     // Read response
+    var response string
+    for {
+        line, err := client.Text.ReadLine()
+        if err != nil {
+            return fmt.Errorf("Error %v", err)
+        }
+        if len(line) <= 0 {
+            break
+        }
+        response += line
+    }
+    fmt.Printf("Response:\n%v\n", response)
 
     // Close the SMTP client
     client.Quit()
