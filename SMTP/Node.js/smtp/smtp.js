@@ -10,24 +10,13 @@ async function sendEmail() {
     port: emailData.port,
     secure: false, // set true to use SSL, false to use TLS
     auth: {
-      type: "custom",
-      method: "ACCESS_TOKEN",
-      user: "username",
-      pass: "password",
-      options: {
-        accessToken: emailData.accessToken,
-      },
+      type: "login",
+      user: emailData.username,
+      pass: emailData.password,
     },
-    authMethod: "ACCESS_TOKEN",
-    customAuth: {
-      ACCESS_TOKEN: async (ctx) => {
-        let cmd = await ctx.sendCommand(
-          "AUTH ACCESS_TOKEN " + ctx.auth.credentials.options.accessToken.trim()
-        );
-      },
-    },
+    authMethod: "LOGIN",
     logger: true,
-    debug: true,
+    debug: true
   });
 
   // Prepare the email options
@@ -38,7 +27,10 @@ async function sendEmail() {
     text: emailData.textContent,
     html: emailData.htmlContent,
     headers: {
-      "X-ZCEA-SMTP-DATA": JSON.stringify(emailData.metaData),
+      "X-ZCEA-SMTP-DATA": {
+        prepared: true,
+        value: JSON.stringify(emailData.metaData)
+      }
     },
   };
 
@@ -64,11 +56,11 @@ function prepareEmailData() {
     recipient_data: {
       "sophia@zylker.com": {
         name: "Sophia Alexandri",
-        additionalData: {
+        additional_data: {
           phone: "+301234567890",
           country: "Greece",
         },
-        mergeData: {
+        merge_data: {
           first_name: "Sophia",
         },
       },
@@ -80,7 +72,8 @@ function prepareEmailData() {
   emailData.textContent =
     "Welcome $[first_name|Customer]$! Summer Hot Savings, You Don’t Want to Miss";
 
-  emailData.accessToken = "1000.***************************************"; // Replace with your access token
+  emailData.username = "apikey";
+  emailData.password = "1000.****************************"; // Replace with your access token
 
   return emailData;
 }

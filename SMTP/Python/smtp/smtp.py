@@ -7,7 +7,8 @@ def prepareEmailData():
     emailData = {}
     emailData["host"] = "smtp-campaigns.zoho.com"
     emailData["port"] = 587
-    emailData["access_token"] = "1000.****************************" # replace with your access token
+    emailData["username"] = "apikey"
+    emailData["password"] = "1000.****************************" # replace with your access token
 
     emailData["subject"] = "My first mail using Zoho Campaigns Email API SMTP"
     emailData["sender_address"] = "aaron@zylker.com"
@@ -45,18 +46,27 @@ try:
     # Send the email
     mailserver = smtplib.SMTP(emailData["host"], emailData["port"])
     mailserver.set_debuglevel(1)
+    
     # identify ourselves to smtp gmail client
-    mailserver.ehlo()
+    code, response = mailserver.ehlo()
+    print(f"EHLO response: {code} - {response.decode()}")
+    
     # secure our email with tls encryption
-    mailserver.starttls()
+    code, response = mailserver.starttls()
+    print(f"STARTTLS response: {code} - {response.decode()}")
+    
     # re-identify ourselves as an encrypted connection
-    mailserver.ehlo()
-    code, response = mailserver.docmd("AUTH ACCESS_TOKEN " + emailData["access_token"])
-    if code != 235:
-        raise smtplib.SMTPAuthenticationError(code, response)
-
+    code, response = mailserver.ehlo()
+    print(f"EHLO (after STARTTLS) response: {code} - {response.decode()}")
+    
+    # Authenticate using AUTH LOGIN
+    code, response = mailserver.login(emailData["username"], emailData["password"])
+    print(f"AUTH LOGIN response: {code} - {response}")
+    
+    # Send the email
     mailserver.sendmail(emailData["sender_address"], emailData["recipients"], message.as_string())
 
+    # Close the connection
     mailserver.quit()
     print("Email sent successfully")
 except Exception as e:

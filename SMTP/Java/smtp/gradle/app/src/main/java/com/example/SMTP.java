@@ -26,7 +26,7 @@ public class SMTP {
 
 			// Set up mail session properties
 			Properties properties = new Properties();
-			properties.put("mail.smtp.auth", "false"); // set to false because we are doing a custom AUTH mechanism
+			properties.put("mail.smtp.auth", "true");
 			properties.put("mail.smtp.starttls.enable", "true");
 			properties.put("mail.smtp.ssl.protocols", "TLSv1.3");
 			properties.put("mail.smtp.ssl.trust", "*");
@@ -66,11 +66,8 @@ public class SMTP {
 
 			SMTPTransport transport = (SMTPTransport) session.getTransport("smtp");
 
-			// Connect to the SMTP server without username and password, because we are sending a custom AUTH command
-			transport.connect();
-
-			// Send the custom AUTH ACCESS_TOKEN command
-			transport.issueCommand("AUTH ACCESS_TOKEN " + emailData.getString("accessToken"), 235);
+			// Connect to the SMTP server
+			transport.connect(emailData.getString("username"), emailData.getString("password"));
 
 			// Send the email
 			transport.sendMessage(message, message.getAllRecipients());
@@ -86,7 +83,8 @@ public class SMTP {
 
 		String host = "smtp-campaigns.zoho.com";
 		int port = 587;
-		String accessToken = "1000.***************************************"; // Replace with your access token
+		String username = "apikey";
+		String password = "1000.***************************************"; // Replace with your access token
 
 		String senderAddress = "aaron@zylker.com";
 		String subject = "My first mail using Zoho Campaigns Email API SMTP";
@@ -121,7 +119,8 @@ public class SMTP {
 
 		emailData.put("host", host);
 		emailData.put("port", port);
-		emailData.put("accessToken", accessToken);
+		emailData.put("username", username);
+		emailData.put("password", password);
 		emailData.put("senderAddress", senderAddress);
 		emailData.put("subject", subject);
 		emailData.put("recipients", recipients);

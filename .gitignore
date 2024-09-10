@@ -5,3 +5,7 @@ target
 dependency-reduced-pom.xml
 __pycache__
 venv
+vendor
+composer.lock
+.env
+*.log
