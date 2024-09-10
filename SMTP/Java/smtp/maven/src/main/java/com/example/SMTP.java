@@ -29,7 +29,6 @@ public class SMTP {
 			properties.put("mail.smtp.auth", "true");
 			properties.put("mail.smtp.starttls.enable", "true");
 			properties.put("mail.smtp.ssl.protocols", "TLSv1.3");
-			properties.put("mail.smtp.ssl.trust", "*");
 			properties.put("mail.smtp.host", emailData.getString("host"));
 			properties.put("mail.smtp.port", String.valueOf(emailData.getInt("port")));
 			Session session = Session.getInstance(properties);
