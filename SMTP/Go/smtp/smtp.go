@@ -7,22 +7,22 @@ import (
     "net"
     "net/smtp"
     "net/textproto"
-
+    "encoding/base64"
     "github.com/jordan-wright/email"
 )
 
 func main() {
     // Prepare the email data
-    e, smtpServer, auth := prepareEmailData()
+    e, smtpServer, username, password := prepareEmailData()
 
     // Send the email
-    if err := sendEmail(e, smtpServer, auth); err != nil {
+    if err := sendEmail(e, smtpServer, username, password); err != nil {
         fmt.Println("Failed to send email:", err)
     }
 }
 
 // prepareEmailData constructs and returns the email message and SMTP configuration
-func prepareEmailData() (*email.Email, string, CustomAuth) {
+func prepareEmailData() (*email.Email, string, string, string) {
     
     // Email sender, recipient details, and other data
     senderAddress := "aron@zylker.com"
@@ -52,7 +52,7 @@ func prepareEmailData() (*email.Email, string, CustomAuth) {
     metaDataBytes, err := json.Marshal(metaData)
     if err != nil {
         fmt.Println("Error marshaling metaData:", err)
-        return nil, "", CustomAuth{}
+        return nil, "", "", ""
     }
     metaDataStr := string(metaDataBytes)
 
@@ -66,23 +66,19 @@ func prepareEmailData() (*email.Email, string, CustomAuth) {
     e.Headers = textproto.MIMEHeader{
         "X-ZCEA-SMTP-DATA": {metaDataStr},
     }
-
+    
     // SMTP server configuration
     host := "smtp-campaigns.zoho.com"
     port := "587"
     smtpServer := net.JoinHostPort(host, port)
+    username := "apikey"
+    password := "1000.*********************************" // Replace with your access token
 
-    // Set up custom SMTP authentication
-    auth := CustomAuth{
-        accessToken: "1000.***************", // Replace with your access token
-        host:        host,
-    }
-
-    return e, smtpServer, auth
+    return e, smtpServer, username, password
 }
 
 // sendEmail handles the logic for sending an email using an SMTP server
-func sendEmail(e *email.Email, smtpServer string, auth CustomAuth) error {
+func sendEmail(e *email.Email, smtpServer string, username string, password string) error {
     host, _, _ := net.SplitHostPort(smtpServer)
 
     // Connect to the SMTP server
@@ -105,8 +101,8 @@ func sendEmail(e *email.Email, smtpServer string, auth CustomAuth) error {
     }
 
     // Perform authentication
-    if err = sendAuthCommand(client, auth); err != nil {
-        return fmt.Errorf("error during authentication: %v", err)
+    if err = sendAuthLogin(client, username, password); err != nil {
+        fmt.Errorf("Error during AUTH LOGIN: %v", err)
     }
 
     // Set the sender and recipient
@@ -161,25 +157,42 @@ func sendEmail(e *email.Email, smtpServer string, auth CustomAuth) error {
     return nil
 }
 
-// sendAuthCommand manually sends the AUTH command to the SMTP client
-func sendAuthCommand(client *smtp.Client, auth CustomAuth) error {
-    // Send the AUTH command with the unencoded access token
-    command := fmt.Sprintf("AUTH ACCESS_TOKEN %s", auth.accessToken)
-    if err := client.Text.PrintfLine(command); err != nil {
-        return fmt.Errorf("error sending AUTH command: %v", err)
+// sendAuthLogin sends the AUTH LOGIN command with base64-encoded credentials.
+func sendAuthLogin(client *smtp.Client, username, password string) error {
+    // Send the AUTH LOGIN command.
+    if err := client.Text.PrintfLine("AUTH LOGIN"); err != nil {
+        return fmt.Errorf("error sending AUTH LOGIN command: %v", err)
     }
 
-    // Read the server response to confirm authentication
-    _, _, err := client.Text.ReadResponse(235)
-    if err != nil {
-        return fmt.Errorf("error reading authentication response: %v", err)
+    // Read the server's response.
+    code, message, err := client.Text.ReadResponse(334)
+    if err != nil || code != 334 {
+        return fmt.Errorf("error reading server response: %v, %s", err, message)
+    }
+
+    // Send the base64-encoded username.
+    encodedUsername := base64.StdEncoding.EncodeToString([]byte(username))
+    if err := client.Text.PrintfLine(encodedUsername); err != nil {
+        return fmt.Errorf("error sending base64-encoded username: %v", err)
+    }
+
+    // Read the server's response.
+    code, message, err = client.Text.ReadResponse(334)
+    if err != nil || code != 334 {
+        return fmt.Errorf("error reading server response after username: %v, %s", err, message)
+    }
+
+    // Send the base64-encoded password.
+    encodedPassword := base64.StdEncoding.EncodeToString([]byte(password))
+    if err := client.Text.PrintfLine(encodedPassword); err != nil {
+        return fmt.Errorf("error sending base64-encoded password: %v", err)
+    }
+
+    // Read the server's response to the authentication attempt.
+    code, message, err = client.Text.ReadResponse(235)
+    if err != nil || code != 235 {
+        return fmt.Errorf("authentication failed: %v, %s", err, message)
     }
 
     return nil
-}
-
-// CustomAuth implements the smtp.Auth interface for AUTH ACCESS_TOKEN
-type CustomAuth struct {
-    accessToken string
-    host        string
 }
