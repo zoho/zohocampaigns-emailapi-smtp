@@ -96,7 +96,7 @@ func sendEmail(e *email.Email, smtpServer string, username string, password stri
     defer client.Close()
 
     // Start TLS encryption
-    if err = client.StartTLS(&tls.Config{ServerName: host, InsecureSkipVerify: true}); err != nil {
+    if err = client.StartTLS(&tls.Config{ServerName: host, InsecureSkipVerify: false}); err != nil {
         return fmt.Errorf("Error starting TLS: %v", err)
     }
 
