@@ -29,7 +29,7 @@ func prepareEmailData() (*email.Email, string, string, string) {
     recipients := []string{"sophia@zylker.com"}
     subject := "My first mail using Zoho Campaigns Email API SMTP"
     metaData := map[string]interface{}{
-        "campaign_name": "Summer is here",
+        "transmission_name": "Summer is here",
         "recipient_data": map[string]interface{}{
             "sophia@zylker.com": map[string]interface{}{
                 "name": "Sophia Alexandri",

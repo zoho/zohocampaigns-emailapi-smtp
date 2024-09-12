@@ -109,7 +109,7 @@ public class SMTP {
 
 		recipientData.put("sophia@zylker.com", recipient1);
 
-		metaData.put("campaign_name", "Summer is here");
+		metaData.put("transmission_name", "Summer is here");
 		metaData.put("recipient_data", recipientData);
 
 		// Body

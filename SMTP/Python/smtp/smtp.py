@@ -14,7 +14,7 @@ def prepareEmailData():
     emailData["sender_address"] = "aaron@zylker.com"
     emailData["recipients"] = ["sophia@zylker.com"]
     emailData["meta_data"] = {
-        "campaign_name": "Summer is here",
+        "transmission_name": "Summer is here",
         "recipient_data": {
             "sophia@zylker.com": {
                 "name": "Sophia Alexandri",
