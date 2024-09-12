@@ -54,7 +54,7 @@ function prepareEmailData() {
         "htmlContent" => "<html><body>Welcome \$[first_name|Customer]$!<br>Summer Hot Savings, You Don't Want to Miss</body></html>",
         "textContent" => "Welcome \$[first_name|Customer]$! Summer Hot Savings, You Don’t Want to Miss",
         "metaData" => array(
-            "campaign_name" => "Summer is here",
+            "transmission_name" => "Summer is here",
             "recipient_data" => [
                 "sophia@zylker.com" => [
                     "name" => "Sophia Alexandri",

@@ -52,7 +52,7 @@ function prepareEmailData() {
   emailData.senderAddress = "aaron@zylker.com";
   emailData.recipients = ["sophia@zylker.com"];
   emailData.metaData = {
-    campaign_name: "Summer is here",
+    transmission_name: "Summer is here",
     recipient_data: {
       "sophia@zylker.com": {
         name: "Sophia Alexandri",
