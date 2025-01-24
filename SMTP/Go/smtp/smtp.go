@@ -72,7 +72,7 @@ func prepareEmailData() (*email.Email, string, string, string) {
     port := "587"
     smtpServer := net.JoinHostPort(host, port)
     username := "apikey"
-    password := "1000.*********************************" // Replace with your access token
+    password := "1000.*********************************" // Replace with your API key
 
     return e, smtpServer, username, password
 }

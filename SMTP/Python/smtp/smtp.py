@@ -8,7 +8,7 @@ def prepareEmailData():
     emailData["host"] = "smtp-campaigns.zoho.com"
     emailData["port"] = 587
     emailData["username"] = "apikey"
-    emailData["password"] = "1000.****************************" # replace with your access token
+    emailData["password"] = "1000.****************************" # replace with your API key
 
     emailData["subject"] = "My first mail using Zoho Campaigns Email API SMTP"
     emailData["sender_address"] = "aaron@zylker.com"

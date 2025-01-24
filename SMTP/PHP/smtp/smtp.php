@@ -67,7 +67,7 @@ function prepareEmailData() {
         "port" => 587,
         "senderAddress" => "aron@zylker.com",
         "username" => "apikey",
-        "password" => "1000.*************************"
+        "password" => "1000.*************************" // Replace with your API key
     );
     return $emailData;
 }

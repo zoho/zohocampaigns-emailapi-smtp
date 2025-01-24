@@ -83,7 +83,7 @@ public class SMTP {
 		String host = "smtp-campaigns.zoho.com";
 		int port = 587;
 		String username = "apikey";
-		String password = "1000.***************************************"; // Replace with your access token
+		String password = "1000.***************************************"; // Replace with your API key
 
 		String senderAddress = "aaron@zylker.com";
 		String subject = "My first mail using Zoho Campaigns Email API SMTP";
