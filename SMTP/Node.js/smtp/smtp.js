@@ -73,7 +73,7 @@ function prepareEmailData() {
     "Welcome $[first_name|Customer]$! Summer Hot Savings, You Don’t Want to Miss";
 
   emailData.username = "apikey";
-  emailData.password = "1000.****************************"; // Replace with your access token
+  emailData.password = "1000.****************************"; // Replace with your API key
 
   return emailData;
 }
