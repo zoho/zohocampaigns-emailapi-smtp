@@ -28,7 +28,7 @@ function constructPayload() {
 
     // Payload
     const payload = {
-        campaign_name: "Summer is here",
+        transmission_name: "Summer is here",
         recipients: recipientData,
         content: content
     };

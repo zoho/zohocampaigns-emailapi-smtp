@@ -32,7 +32,7 @@ function constructPayload() {
 
     // Payload
     $payload = [
-        "campaign_name" => "Summer is here",
+        "transmission_name" => "Summer is here",
         "recipients" => $recipient_data,
         "content" => $content
     ];
