@@ -27,7 +27,7 @@ type Content struct {
 }
 
 type Payload struct {
-	CampaignName string      `json:"campaign_name"`
+	CampaignName string      `json:"transmission_name"`
 	Recipients   []Recipient `json:"recipients"`
 	Content      Content     `json:"content"`
 }

@@ -83,7 +83,7 @@ public class Transmission {
 		fromData.put("name", "Aron Fletcher");
 		content.put("from", fromData);
 
-		payload.put("campaign_name", "Summer is here");
+		payload.put("transmission_name", "Summer is here");
 		payload.put("recipients", recipientData);
 		payload.put("content", content);
 		return payload;
