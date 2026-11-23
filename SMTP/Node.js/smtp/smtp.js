@@ -15,8 +15,10 @@ async function sendEmail() {
       pass: emailData.password,
     },
     authMethod: "LOGIN",
-    logger: true,
-    debug: true
+    // logger/debug are intentionally off: the traces include the AUTH exchange (API key) and message data.
+    // Set them to true only for debugging in a local setup, never in production.
+    logger: false,
+    debug: false
   });
 
   // Prepare the email options

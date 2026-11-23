@@ -32,7 +32,8 @@ public class SMTP {
 			properties.put("mail.smtp.host", emailData.getString("host"));
 			properties.put("mail.smtp.port", String.valueOf(emailData.getInt("port")));
 			Session session = Session.getInstance(properties);
-			session.setDebug(true);
+			// session.setDebug(true) is intentionally not enabled: it logs the AUTH exchange (API key) and message data.
+			// Use it only for debugging in a local setup, never in production.
 
 			// Create and configure the MimeMessage
 			Message message = new MimeMessage(session);
