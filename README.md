@@ -7,6 +7,7 @@ Welcome to the official repository of Zoho Campaigns Email API! This repository 
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
+  - [Security Notes](#security-notes)
 - [HTTP API Clients](#http-api-clients)
   - [Java](#java-http-client)
   - [Python](#python-http-client)
@@ -29,6 +30,15 @@ This repository contains sample code for interacting with our service. Whether y
 ### Prerequisites
 
 To use the sample code provided, you'll need to replace placeholder access token with your own. You can follow the steps provided [here](https://www.zoho.com/campaigns/help/emailapi/authentication.html) to generate an access token.
+
+### Security Notes
+
+The samples are starting points. Before using them in production:
+
+- **Do not enable protocol tracing or debug logging in production.** It is intended only for debugging in a local setup. SMTP debug output (for example, `set_debuglevel` in Python, `session.setDebug` in Java, `SMTPDebug` in PHPMailer, `debug`/`logger` in Nodemailer) records the authentication exchange, which contains your API key, along with recipients and message content. Anyone who can read your logs could then use the key.
+- **Always use verified TLS.** The samples require STARTTLS and verify the server certificate and hostname before authenticating. Do not disable certificate verification, set `rejectUnauthorized: false`, or make STARTTLS optional; otherwise an attacker on the network path can downgrade or intercept the connection and capture your API key.
+- **Keep the API key out of source code and logs.** Load it from an environment variable or a secrets manager instead of hardcoding it, and never commit it.
+- **Rotate the key** if it may have appeared in logs, and restrict who can read application logs.
 
 ## HTTP API Clients
 

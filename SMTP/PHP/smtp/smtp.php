@@ -11,10 +11,9 @@ function smtpSendMail() {
     // Create a new PHPMailer instance
     $mail = new PHPMailer(true);
 
-    $mail->SMTPDebug = 2;
-    $mail->Debugoutput = function($str, $level) {
-        echo "Debug level $level; message: $str<br>";
-    };
+    // SMTP debug output is intentionally off: it logs the AUTH exchange (API key) and message data.
+    // Set SMTPDebug > 0 only for debugging in a local setup, never in production.
+    $mail->SMTPDebug = 0;
 
     $mail->isSMTP();
     $mail->Host       = $emailData["host"];

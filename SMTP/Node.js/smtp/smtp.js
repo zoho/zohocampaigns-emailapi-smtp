@@ -8,15 +8,18 @@ async function sendEmail() {
   let transporter = nodemailer.createTransport({
     host: emailData.host,
     port: emailData.port,
-    secure: false, // set true to use SSL, false to use TLS
+    secure: false, // false = connect in plaintext, then upgrade with STARTTLS (port 587). true is only for implicit TLS (port 465); do not use it with 587.
+    requireTLS: true, // fail if STARTTLS is unavailable instead of sending credentials in plaintext
     auth: {
       type: "login",
       user: emailData.username,
       pass: emailData.password,
     },
     authMethod: "LOGIN",
-    logger: true,
-    debug: true
+    // logger/debug are intentionally off: the traces include the AUTH exchange (API key) and message data.
+    // Set them to true only for debugging in a local setup, never in production.
+    logger: false,
+    debug: false
   });
 
   // Prepare the email options

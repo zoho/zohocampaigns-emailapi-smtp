@@ -1,4 +1,5 @@
 import smtplib
+import ssl
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import json
@@ -45,14 +46,18 @@ try:
 
     # Send the email
     mailserver = smtplib.SMTP(emailData["host"], emailData["port"])
-    mailserver.set_debuglevel(1)
+    # set_debuglevel() is intentionally not enabled: the protocol trace includes the Base64 AUTH
+    # exchange (the API key) and message data, which would leak into logs.
+    # Use it only for debugging in a local setup, never in production.
     
     # identify ourselves to smtp gmail client
     code, response = mailserver.ehlo()
     print(f"EHLO response: {code} - {response.decode()}")
     
     # secure our email with tls encryption
-    code, response = mailserver.starttls()
+    # Verify the server certificate and hostname so the connection cannot be
+    # intercepted or downgraded before credentials are sent.
+    code, response = mailserver.starttls(context=ssl.create_default_context())
     print(f"STARTTLS response: {code} - {response.decode()}")
     
     # re-identify ourselves as an encrypted connection

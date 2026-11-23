@@ -28,11 +28,15 @@ public class SMTP {
 			Properties properties = new Properties();
 			properties.put("mail.smtp.auth", "true");
 			properties.put("mail.smtp.starttls.enable", "true");
+			// Fail instead of sending credentials in plaintext, and verify the server certificate hostname.
+			properties.put("mail.smtp.starttls.required", "true");
+			properties.put("mail.smtp.ssl.checkserveridentity", "true");
 			properties.put("mail.smtp.ssl.protocols", "TLSv1.3");
 			properties.put("mail.smtp.host", emailData.getString("host"));
 			properties.put("mail.smtp.port", String.valueOf(emailData.getInt("port")));
 			Session session = Session.getInstance(properties);
-			session.setDebug(true);
+			// session.setDebug(true) is intentionally not enabled: it logs the AUTH exchange (API key) and message data.
+			// Use it only for debugging in a local setup, never in production.
 
 			// Create and configure the MimeMessage
 			Message message = new MimeMessage(session);
