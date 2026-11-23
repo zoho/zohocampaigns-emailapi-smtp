@@ -1,4 +1,5 @@
 import smtplib
+import ssl
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import json
@@ -54,7 +55,9 @@ try:
     print(f"EHLO response: {code} - {response.decode()}")
     
     # secure our email with tls encryption
-    code, response = mailserver.starttls()
+    # Verify the server certificate and hostname so the connection cannot be
+    # intercepted or downgraded before credentials are sent.
+    code, response = mailserver.starttls(context=ssl.create_default_context())
     print(f"STARTTLS response: {code} - {response.decode()}")
     
     # re-identify ourselves as an encrypted connection
