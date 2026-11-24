@@ -19,6 +19,7 @@ function smtpSendMail() {
     $mail->Host       = $emailData["host"];
     $mail->Port       = $emailData["port"];
     $mail->SMTPAuth   = true;
+    $mail->AuthType   = 'LOGIN';
     $mail->Username   = $emailData["username"];
     $mail->Password   = $emailData["password"];
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;

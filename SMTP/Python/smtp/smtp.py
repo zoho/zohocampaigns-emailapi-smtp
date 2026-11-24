@@ -65,7 +65,9 @@ try:
     print(f"EHLO (after STARTTLS) response: {code} - {response.decode()}")
     
     # Authenticate using AUTH LOGIN
-    code, response = mailserver.login(emailData["username"], emailData["password"])
+    mailserver.user = emailData["username"]
+    mailserver.password = emailData["password"]
+    code, response = mailserver.auth("LOGIN", mailserver.auth_login, initial_response_ok=False)
     print(f"AUTH LOGIN response: {code} - {response}")
     
     # Send the email
