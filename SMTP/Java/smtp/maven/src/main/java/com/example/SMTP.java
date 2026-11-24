@@ -27,6 +27,7 @@ public class SMTP {
 			// Set up mail session properties
 			Properties properties = new Properties();
 			properties.put("mail.smtp.auth", "true");
+			properties.put("mail.smtp.auth.mechanisms", "LOGIN");
 			properties.put("mail.smtp.starttls.enable", "true");
 			// Fail instead of sending credentials in plaintext, and verify the server certificate hostname.
 			properties.put("mail.smtp.starttls.required", "true");
